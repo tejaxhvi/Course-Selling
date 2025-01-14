@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express()
+const mongo = require('mongoose')
 
 const { PORT } = require('./config')
 
@@ -12,7 +13,10 @@ app.use('/admin', AdminRoutes)
 app.use('/course', CoursesRoutes) 
 console.log("routes");
 
-
-app.listen(PORT , function(){
+async function main(){  // This function should ensure that the server crashes if mongo is not connected
+    await mongo.connect('DB_ADDRESS')
+    app.listen(PORT , function(){
     console.log(`Server is connected to Port-${PORT}`);
 })
+}
+main()

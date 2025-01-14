@@ -2,8 +2,8 @@ const mongo = require('mongoose');
 const Schema = mongo.Schema;
 const ObjectId = Schema.objectid()
 
-const { DB_ADDRESS }  = require('./config')
- await mongo.connect('DB_ADDRESS')
+// const { DB_ADDRESS }  = require('./config')
+//  await mongo.connect('DB_ADDRESS')
 
 const User = new Schema ({
     _id : ObjectId,
@@ -26,8 +26,6 @@ const Courses = new Schema({
     price : Number , 
     creatorId : String
 })
-
-
 
 
 const UsersModel = mongoose.model('User', User)
