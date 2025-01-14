@@ -7,7 +7,7 @@ const { CoursesRoutes } = require('./Routes/courses')
 
 app.use('/user' , UserRoutes)
 app.use('/admin', AdminRoutes)
-app.use('/course', CoursesRoutes)
+app.use('/course', CoursesRoutes) 
 console.log("routes");
 
 

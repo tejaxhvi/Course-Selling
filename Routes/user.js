@@ -16,6 +16,6 @@ UserRoutes.post('/login',async function (req , res) {
 })
 
 
-module.exports = {
+module.exports = {  // Always uses Object type while exports variables
     UserRoutes : UserRoutes
 };

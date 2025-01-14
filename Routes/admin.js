@@ -16,6 +16,19 @@ AdminRoutes.post('/login',async function (req, res) {
     })
 })
 
+AdminRoutes.post('/courses',function (req,res){
+    
+    res.json({
+        message : "Here is the List of All Your Courses"
+    })
+})
+
+AdminRoutes.put('/courses',function (req,res){
+
+    res.json({
+        message : "Make Changes in your Courses"
+    })
+})
 module.exports= {
     AdminRoutes : AdminRoutes
 };
