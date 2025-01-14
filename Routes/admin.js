@@ -1,9 +1,7 @@
-const { Router } = require('express')
-const AdminRoutes = Router();
+const express = require('express')
+const AdminRoutes = express.Router()
 
 AdminRoutes.post('/signup',async function (req, res) {
-    const signup_username = req.body.username;
-    const signup_password = req.body.password;
 
     res.json({
         message : "This is Admin Sign-up Endpoint Route"
@@ -11,7 +9,6 @@ AdminRoutes.post('/signup',async function (req, res) {
 })
 
 AdminRoutes.post('/login',async function (req, res) {
-    const login_username = req.body.username;
 
 
     res.json({
@@ -19,5 +16,7 @@ AdminRoutes.post('/login',async function (req, res) {
     })
 })
 
-module.exports= AdminRoutes;
+module.exports= {
+    AdminRoutes : AdminRoutes
+};
 
