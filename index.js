@@ -1,6 +1,8 @@
 const express = require('express')
 const app = express()
 
+const { PORT } = require('./config')
+
 const { UserRoutes } = require('./Routes/user')
 const { AdminRoutes } = require('./Routes/admin')
 const { CoursesRoutes } = require('./Routes/courses')
@@ -11,7 +13,6 @@ app.use('/course', CoursesRoutes)
 console.log("routes");
 
 
-
-
-
-app.listen(3000)
+app.listen(PORT , function(){
+    console.log(`Server is connected to Port-${PORT}`);
+})

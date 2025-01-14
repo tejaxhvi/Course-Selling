@@ -2,8 +2,8 @@ const mongo = require('mongoose');
 const Schema = mongo.Schema;
 const ObjectId = Schema.objectid()
 
-
- await mongo.connect('mongodb+srv://admin:tejashvi_brahman@cluster0.6sd2h.mongodb.net/Course-Selling')
+const { DB_ADDRESS }  = require('./config')
+ await mongo.connect('DB_ADDRESS')
 
 const User = new Schema ({
     _id : ObjectId,
