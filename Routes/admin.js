@@ -2,6 +2,15 @@ const express = require('express')
 const AdminRoutes = express.Router()
 
 AdminRoutes.post('/signup',async function (req, res) {
+        const username = req.body.username;
+        const firstname = req.body.name;
+        const password = req.body.password;
+    
+        await UserModel.create({    // should be a await because it may take time
+            user : username,
+            password : password,
+            name : firstname
+        })
 
     res.json({
         message : "This is Admin Sign-up Endpoint Route"
