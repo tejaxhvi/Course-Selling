@@ -1,6 +1,5 @@
 const express = require('express')
 const app = express();
-const mongoose = require('mongoose')
 const UserRoutes = express.Router()
 const zod = require('zod')
 const jwt = require('jsonwebtoken')
@@ -15,14 +14,32 @@ UserRoutes.post('/signup',async function (req , res) {
     const email = req.body.mail;
     const password = req.body.password;
 
-    await UsersModel.create({    // should be a await because it may take time
+    const UserData = zod.object({
+        email : zod.string().email().max(20),
+        password : zod.string().min(3).max(10),
+        username : zod.string().min(5).max(15)
+    })
+
+    const CheckUserData = UserData.safeParse({
+        username : username,
+        password : password,
+        email : email
+    })
+
+    if(!CheckUserData.success){
+        res.json({
+            message : "Incorrect Credentials"
+        })
+        console.log(CheckUserData.error.code);
+        
+    }else{
+        await UsersModel.create({    // should be a await because it may take time
         email : email,
         password : password,
         username : username
     })
-
-
     res.json({message : "You are Signed-up"}) 
+    }
 })
 
 

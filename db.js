@@ -13,9 +13,9 @@ const User = new Schema ({
 
 const Admin = new Schema({
     userId : ObjectId,
-    email : String,
+    email : {type : String , unique : true},
     password : String,
-    firstname : String
+    username : String
 })
 
 const Courses = new Schema({
