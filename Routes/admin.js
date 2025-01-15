@@ -1,28 +1,46 @@
 const express = require('express')
 const AdminRoutes = express.Router()
+const jwt = require('jsonwebtoken')
 
+const { JWT_SECRET } = require('../config')
+
+const { AdminModel } = require("../db")
 AdminRoutes.post('/signup',async function (req, res) {
         const username = req.body.username;
-        const firstname = req.body.name;
+        const mail = req.body.mail;
         const password = req.body.password;
     
-        await UserModel.create({    // should be a await because it may take time
-            user : username,
+        await AdminModel.create({    // should be a await because it may take time
+            username : username,
             password : password,
-            name : firstname
+            mail : mail
         })
 
     res.json({
-        message : "This is Admin Sign-up Endpoint Route"
+        message : "Admin Account is Created"
     })
 })
 
 AdminRoutes.post('/login',async function (req, res) {
+    const username = req.body.username;
+    const password = req.body.password;
 
-
-    res.json({
-        message : "This is Admin Login Endpoint Route"
+    const FindAdmin = AdminModel.findOne({
+        username : username
     })
+    if(FindAdmin){
+        const HashedPassword = jwt.sign({
+            username : username,
+            password : password
+        },JWT_SECRET)
+        res.json({
+            token : HashedPassword
+        })
+    }else{
+        res.json({
+            message : "You need to Create Account"
+        })
+    }
 })
 
 AdminRoutes.post('/courses',function (req,res){

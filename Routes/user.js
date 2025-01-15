@@ -11,28 +11,38 @@ const { JWT_SECRET } = require('../config')
 app.use(express.json())
 
 UserRoutes.post('/signup',async function (req , res) {
-    const firstname = req.body.name;
+    const username = req.body.username;
     const email = req.body.mail;
     const password = req.body.password;
-
-    const token = jwt.sign({ password : password} , JWT_SECRET)
-    console.log(token)
 
     await UsersModel.create({    // should be a await because it may take time
         email : email,
         password : password,
-        name : firstname
+        username : username
     })
 
 
-    res.json({message : "This is User Login Endpoint"}) 
+    res.json({message : "You are Signed-up"}) 
 })
 
 
 UserRoutes.post('/login',async function (req , res) {
+    const username = req.body.username;
+    const password = req.body.password;
 
+    const UserFind = UsersModel.findOne({
+        username : username,
+        password : password
+    })
+    if(UserFind){
+        const HashedPassword = jwt.sign({ password } , JWT_SECRET )
+        res.json({
+            token : HashedPassword
+        })
 
-    res.json({message : "This is User Login Endpoint"})
+    }else{
+        res.json({message : "You are Logged-in"})
+    }
 })
 
 

@@ -8,7 +8,7 @@ const User = new Schema ({
     userId : ObjectId,
     email : {type : String , unique : true},
     password : String,
-    firstname : String
+    username : String
 })
 
 const Admin = new Schema({
