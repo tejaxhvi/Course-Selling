@@ -6,21 +6,22 @@ const zod = require('zod')
 const { JWT_SECRET } = require('../config')
 
 const { AdminModel } = require("../db")
+
 AdminRoutes.post('/signup',async function (req, res) {
         const username = req.body.username;
-        const mail = req.body.mail;
+        const email = req.body.mail;
         const password = req.body.password;
     
- 
         const UserData = zod.object({
             email : zod.string().email().max(20),
             password : zod.string().min(3).max(10),
             username : zod.string().min(5).max(15)
         })
+        const IncryptedPassword = bcrypt.hash(password , 5)
     
         const CheckUserData = UserData.safeParse({
             username : username,
-            password : password,
+            password : IncryptedPassword,
             email : email
         })
     
@@ -31,7 +32,7 @@ AdminRoutes.post('/signup',async function (req, res) {
             console.log(CheckUserData.error.code);
             
         }else{
-            await UsersModel.create({    // should be a await because it may take time
+            await AdminModel.create({    // should be a await because it may take time
             email : email,
             password : password,
             username : username
@@ -46,21 +47,32 @@ AdminRoutes.post('/login',async function (req, res) {
     const password = req.body.password;
 
     const FindAdmin = AdminModel.findOne({
-        username : username
+        username : username,
+        password : password
     })
-    if(FindAdmin){
-        const HashedPassword = jwt.sign({
-            username : username,
-            password : password
-        },JWT_SECRET)
-        res.json({
-            token : HashedPassword
-        })
+
+    const DecryptPassword = await bcrypt.compare(password , FindAdmin.password)
+
+    if(DecryptPassword){
+        if(FindAdmin){
+            const HashedPassword = jwt.sign({
+                username : username,
+                password : password
+            },JWT_SECRET)
+            res.json({
+                token : HashedPassword
+            })
+        }else{
+            res.json({
+                message : "You need to Create Account"
+            })
+        }
     }else{
         res.json({
-            message : "You need to Create Account"
+            message : "This is Wrong Password"
         })
     }
+    
 })
 
 AdminRoutes.post('/courses',function (req,res){
