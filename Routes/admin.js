@@ -1,6 +1,7 @@
 const express = require('express')
 const AdminRoutes = express.Router()
 const jwt = require('jsonwebtoken')
+const zod = require('zod')
 
 const { JWT_SECRET } = require('../config')
 
@@ -10,16 +11,35 @@ AdminRoutes.post('/signup',async function (req, res) {
         const mail = req.body.mail;
         const password = req.body.password;
     
-        await AdminModel.create({    // should be a await because it may take time
+ 
+        const UserData = zod.object({
+            email : zod.string().email().max(20),
+            password : zod.string().min(3).max(10),
+            username : zod.string().min(5).max(15)
+        })
+    
+        const CheckUserData = UserData.safeParse({
             username : username,
             password : password,
-            mail : mail
+            email : email
         })
-
-    res.json({
-        message : "Admin Account is Created"
+    
+        if(!CheckUserData.success){
+            res.json({
+                message : "Incorrect Credentials"
+            })
+            console.log(CheckUserData.error.code);
+            
+        }else{
+            await UsersModel.create({    // should be a await because it may take time
+            email : email,
+            password : password,
+            username : username
+        })
+        res.json({message : "You are Signed-up"}) 
+        }
     })
-})
+    
 
 AdminRoutes.post('/login',async function (req, res) {
     const username = req.body.username;
