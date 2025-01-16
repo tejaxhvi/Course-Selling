@@ -24,7 +24,7 @@ CoursesRoutes.post('/purchase',UserMiddleware , async function (req , res){
     })
 })
 
-CoursesRoutes.get('/preview',async function (req , res){
+CoursesRoutes.get('/preview',async function (req , res){ // this is unauthenticated endpoint to show all the Coures on Site
     const AllCourses = await CoursesModel.find({})
 
     res.json({

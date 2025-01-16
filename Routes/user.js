@@ -6,6 +6,8 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 
 const { UsersModel } = require('../db')
+const { CoursesModel } = require('../db')
+const { PurchaseModel } = require('../db')
 const { JWT_SECRET } = require('../config')       // Admin should have different JWT_SECRET
 const { UserMiddleware } = require('../middlewares/user')
 
@@ -79,11 +81,36 @@ UserRoutes.post('/login',async function (req , res) {
     
 })
 
-UserRoutes.get('/buycourses', UserMiddleware , async function ( req, res){
+UserRoutes.get('/purchases', UserMiddleware , async function ( req, res){
     const userId = req.userId;
 
+    const UserCourses = await PurchaseModel.find({
+        userId : userId
+    })
+    const FoundCourses = UserCourses.forEach(x => {
+        return x.courseId  
+    })
 
+    const AllCoursesDetails = await CoursesModel.find({
+        courseId : FoundCourses
+    })
+    //console.log(AllCoursesDetails);
+    
+    
+    // const PurchasedCourses = []
 
+    // for (let i = 0; i < UserCourses.length; i++) {
+    //     PurchasedCourses.push(PurchasedCourses[i].courseId)
+    // }
+    
+    // const CourseDetails = CoursesModel.find({
+    //     _id : {$in : PurchasedCourses}
+    // })
+    res.json({
+        message : "This is Your Courses",
+        Coures : AllCoursesDetails
+        
+    })
 })
 
 
