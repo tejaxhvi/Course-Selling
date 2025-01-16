@@ -12,7 +12,7 @@ app.use(express.json())
 
 UserRoutes.post('/signup',async function (req , res) {
     const username = req.body.username;
-    const email = req.body.mail;
+    const email = req.body.email;
     const password = req.body.password;
 
     const UserData = zod.object({
@@ -62,7 +62,7 @@ UserRoutes.post('/login',async function (req , res) {
     
     if(DecryptPassword){
         if(UserFind){
-            const HashedPassword = jwt.sign({ id : UserId._id } , JWT_SECRET )  // using db _id to create token not using username and password
+            const HashedPassword = jwt.sign({ id : UserFind._id } , JWT_SECRET )  // using db _id to create token not using username and password
             res.json({
                 token : HashedPassword
             })

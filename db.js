@@ -19,7 +19,7 @@ const Admin = new Schema({
 })
 
 const Courses = new Schema({
-    _id : ObjectId,
+    userId : ObjectId,  // never use _id 
     title : String,
     description : String,
     price : Number , 

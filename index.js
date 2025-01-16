@@ -13,9 +13,7 @@ app.use(express.json())
 app.use('/user' , UserRoutes)
 app.use('/admin', AdminRoutes)
 app.use('/course', CoursesRoutes) 
-console.log("routes");
 
- 
 app.listen(PORT , function(){
     console.log(`Server is connected to Port-${PORT}`)
     const { DB_ADDRESS } = require('./config')
