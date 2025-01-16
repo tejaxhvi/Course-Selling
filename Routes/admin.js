@@ -3,7 +3,7 @@ const AdminRoutes = express.Router()
 const jwt = require('jsonwebtoken')
 const zod = require('zod')
 
-const { JWT_SECRET } = require('../config')
+const { JWT_SECRET_ADMIN } = require('../config')
 
 const { AdminModel } = require("../db")
 
@@ -58,7 +58,7 @@ AdminRoutes.post('/login',async function (req, res) {
             const HashedPassword = jwt.sign({
                 username : username,
                 password : password
-            },JWT_SECRET)
+            },JWT_SECRET_ADMIN)
             res.json({
                 token : HashedPassword
             })

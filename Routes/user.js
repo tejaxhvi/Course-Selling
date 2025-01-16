@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 
 const { UsersModel } = require('../db')
-const { JWT_SECRET } = require('../config')
+const { JWT_SECRET } = require('../config')       // Admin should have different JWT_SECRET
 
 app.use(express.json())
 
@@ -52,7 +52,7 @@ UserRoutes.post('/login',async function (req , res) {
     const username = req.body.username;
     const password = req.body.password;
 
-    const UserFind = await UsersModel.findOne({
+    const UserFind = await UsersModel.findOne({  // the find() in place of findOne() will accept any password from user and create a token 
         username : username,
         password : password
     })
@@ -62,7 +62,7 @@ UserRoutes.post('/login',async function (req , res) {
     
     if(DecryptPassword){
         if(UserFind){
-            const HashedPassword = jwt.sign({ password } , JWT_SECRET )
+            const HashedPassword = jwt.sign({ id : UserId._id } , JWT_SECRET )  // using db _id to create token not using username and password
             res.json({
                 token : HashedPassword
             })
