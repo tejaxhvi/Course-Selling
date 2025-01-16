@@ -82,7 +82,7 @@ AdminRoutes.post('/course', AdminMiddleware , async function (req,res){
 
     const{ title , description , price } = req.body;
 
-    await CoursesModel.create({
+    const course = await CoursesModel.create({
         title : title,
         description : description,
         price : price,
@@ -91,6 +91,7 @@ AdminRoutes.post('/course', AdminMiddleware , async function (req,res){
     
     res.json({
         message : "This is Your Dashboard",
+        courseId : course._id
         
     })
 })
@@ -101,11 +102,10 @@ AdminRoutes.get('/courses/bulk',AdminMiddleware, async function (req,res){
     const AllCourses = await CoursesModel.find({
         creatorId : adminId
     })
-    console.log(AllCourses);
     
 
     res.json({
-        message : "Make Changes in your Courses"
+        AllCourses : AllCourses
     })
 })
 module.exports= {

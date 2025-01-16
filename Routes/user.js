@@ -34,9 +34,10 @@ UserRoutes.post('/signup',async function (req , res) {
 
     if(!CheckUserData.success){
         res.json({
-            message : "Incorrect Credentials"
+            message : "Incorrect Credentials",
+            error : CheckUserData.error
         })
-        console.log(CheckUserData.error.code);
+        console.log(CheckUserData.error);
         
     }else{
         await UsersModel.create({    // should be a await because it may take time
@@ -55,11 +56,10 @@ UserRoutes.post('/login',async function (req , res) {
 
     const UserFind = await UsersModel.findOne({  // the find() in place of findOne() will accept any password from user and create a token 
         username : username,
-        password : password
     })
-    //console.log(UserFind.password);
+    //console.log(UserFind); return a object which contains user
+
     const DecryptPassword = await bcrypt.compare(password ,UserFind.password)
-    console.log(DecryptPassword);
     
     if(DecryptPassword){
         if(UserFind){
@@ -79,10 +79,10 @@ UserRoutes.post('/login',async function (req , res) {
     
 })
 
-UserRoutes.get('/purchases', UserMiddleware , async function ( req, res){
+UserRoutes.get('/buycourses', UserMiddleware , async function ( req, res){
     const userId = req.userId;
 
-    
+
 
 })
 

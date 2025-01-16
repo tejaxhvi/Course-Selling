@@ -26,13 +26,20 @@ const Courses = new Schema({
     creatorId : String
 })
 
+const purchaseSchema = new Schema({
+    userId: ObjectId,
+    courseId: ObjectId
+});
+
 
 const UsersModel = mongo.model('User', User)
 const AdminModel = mongo.model('Admin', Admin)
 const CoursesModel = mongo.model('Courses', Courses)
+const PurchaseModel = mongo.model('Purchases', purchaseSchema)
 
 module.exports = ({
     UsersModel,
     AdminModel,
-    CoursesModel
+    CoursesModel,
+    PurchaseModel
 })
