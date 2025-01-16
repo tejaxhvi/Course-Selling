@@ -7,6 +7,7 @@ const bcrypt = require('bcrypt')
 
 const { UsersModel } = require('../db')
 const { JWT_SECRET } = require('../config')       // Admin should have different JWT_SECRET
+const { UserMiddleware } = require('../middlewares/user')
 
 app.use(express.json())
 
@@ -76,6 +77,13 @@ UserRoutes.post('/login',async function (req , res) {
         })
     }
     
+})
+
+UserRoutes.get('/purchases', UserMiddleware , async function ( req, res){
+    const userId = req.userId;
+
+    
+
 })
 
 

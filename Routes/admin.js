@@ -96,6 +96,12 @@ AdminRoutes.post('/course', AdminMiddleware , async function (req,res){
 })
 
 AdminRoutes.get('/courses/bulk',AdminMiddleware, async function (req,res){
+    const adminId = req.userId
+
+    const AllCourses = await CoursesModel.find({
+        creatorId : adminId
+    })
+    console.log(AllCourses);
     
 
     res.json({
