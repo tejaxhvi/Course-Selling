@@ -95,7 +95,7 @@ AdminRoutes.post('/course', AdminMiddleware , async function (req,res){
         
     })
 })
-
+// Admin can Show
 AdminRoutes.get('/courses/bulk',AdminMiddleware, async function (req,res){
     const adminId = req.userId
 
