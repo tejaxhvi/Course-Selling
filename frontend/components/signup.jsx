@@ -1,13 +1,12 @@
-import { BrowserRouter , Routes , Route , NavLink } from "react-router-dom";
-
+import { useNavigate } from 'react-router-dom';
 
 export function Signup() {
+
+  const navigate = useNavigate();
+
     return <>
-    <NavLink to="/" Home Page/>
-    <NavLink to="/login" Already a User/>
     <h1>This Sign-Up Page</h1>
+    <button onClick={() => navigate("/login")}>Already a User</button>
     </>
 
   }
-
-  export default Signup

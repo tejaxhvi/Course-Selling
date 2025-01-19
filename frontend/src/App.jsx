@@ -1,5 +1,5 @@
 import { useState , useEffect} from 'react'
-import { BrowserRouter , Routes , Route , NavLink} from 'react-router-dom'
+import { BrowserRouter , Routes , Route } from 'react-router-dom'
 
 import { Signup } from '../components/signup'
 import { Login } from '../components/login'
@@ -20,11 +20,12 @@ function App() {
   // },[])
   return (
     <>
-    <h1 style={{color : 'red'}}>Course Selling Website</h1>
-    
+    <div style={{display: "flex"}}>
+    <h1 style={{ color : 'red' , marginLeft : "150px" , fontSize : "50px"}}>Course Selling Website</h1>
+    <button>Sign-up</button>
+    <button>Login</button>
+    </div>
       <BrowserRouter>
-      <NavLink to="/signup">Sign-up</NavLink> 
-      <NavLink to="/login">Login</NavLink>
         <Routes>
           <Route path="/signup" element={<Signup/>}></Route>
           <Route path="/login" element={<Login/>}></Route>
