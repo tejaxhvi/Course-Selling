@@ -24,7 +24,6 @@ UserRoutes.post('/signup',async function (req , res) {
         username : zod.string().min(5).max(15)
     })
 
-    console.log(username , email , password );
     const IncryptedPassword = await bcrypt.hash(password, 5)  // it is promise you can check by logging it
 
     const CheckUserData = UserData.safeParse({

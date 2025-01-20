@@ -6,39 +6,21 @@ export function Signup() {
      const [username, setusername ] = useState('');
       const [password , setpassword ] = useState('')
       const [email , setemail ] = useState('')
+      const response = "";
+
 
   const navigate = useNavigate();
 
   function completed() {
       console.log(username , password, email) ;
       // Your JSON data
-const jsonData = { username : username , password : password , email : email };
+      const jsonData = { username : username , password : password , email : email };
 
-// Set up options for the fetch request
-const options = {
-  method: 'POST',
-  body: JSON.stringify(jsonData) // Convert JSON data to a string and set it as the request body
-};
-
-// Make the fetch request with the provided options
-fetch('http://localhost:3001/api/user/signup', options)
-  .then(response => {
-    // Check if the request was successful
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    // Parse the response as JSON
-    return response.json();
-  })
-  .then(data => {
-    // Handle the JSON data
-    console.log(data);
-  })
-  .catch(error => {
-    // Handle any errors that occurred during the fetch
-    console.error('Fetch error:', error);
-  });
-    
+      axios.post('http://localhost:3000/api/user/signup',jsonData)
+      .then((response)=> {
+          response = response.data.message
+         console.log(response.data)})
+      .catch(error => console.error('Axios error:', error))
     
   }
 
@@ -60,7 +42,7 @@ fetch('http://localhost:3001/api/user/signup', options)
        <button style={{margin:"50px",height:"30px"}}onClick={() => navigate("/login")}>Already a User</button>
 
        <button onClick={completed}style={{backgroundColor:"#334950",margin:"70px",height:"40px",width:"150px",border:"none",borderRadius:"5px"}}>Sign-UP</button>
-
+        <div>{response}</div>
 
      </div>
 
