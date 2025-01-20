@@ -24,9 +24,8 @@ UserRoutes.post('/signup',async function (req , res) {
         username : zod.string().min(5).max(15)
     })
 
+    console.log(username , email , password );
     const IncryptedPassword = await bcrypt.hash(password, 5)  // it is promise you can check by logging it
-    //console.log(IncryptedPassword);
-
 
     const CheckUserData = UserData.safeParse({
         username : username,
@@ -42,12 +41,19 @@ UserRoutes.post('/signup',async function (req , res) {
         console.log(CheckUserData.error);
         
     }else{
-        await UsersModel.create({    // should be a await because it may take time
-        email : email,
-        password : IncryptedPassword,
-        username : username
-    })
-    res.json({message : "You are Signed-up"}) 
+        try {
+                await UsersModel.create({    // should be a await because it may take time
+                email : email,
+                password : IncryptedPassword,
+                username : username
+            })
+            res.json({message : "You are Signed-up"}) 
+
+        } catch (error) {
+            console.log(error);
+            res.json({message : "Incorrect Credentials"})
+        }
+        
     }
 })
 
