@@ -22,7 +22,7 @@ export function Signup() {
          console.log(response.data)})
       .catch(error => console.error('Axios error:', error))
     
-  }
+  }1
 
     return <>
     <h1 style={{textAlign:"center",fontSize:"50px"}}>Sign-Up </h1>
