@@ -6,8 +6,7 @@ export function Signup() {
      const [username, setusername ] = useState('');
       const [password , setpassword ] = useState('')
       const [email , setemail ] = useState('')
-      const response = "";
-
+    const [response , setresponse] = useState(null)
 
   const navigate = useNavigate();
 
@@ -18,11 +17,12 @@ export function Signup() {
 
       axios.post('http://localhost:3000/api/user/signup',jsonData)
       .then((response)=> {
-          response = response.data.message
-         console.log(response.data)})
+          setresponse(response.data.message)
+         //console.log(response)
+         })
       .catch(error => console.error('Axios error:', error))
     
-  }1
+  }
 
     return <>
     <h1 style={{textAlign:"center",fontSize:"50px"}}>Sign-Up </h1>
@@ -42,9 +42,16 @@ export function Signup() {
        <button style={{margin:"50px",height:"30px"}}onClick={() => navigate("/login")}>Already a User</button>
 
        <button onClick={completed}style={{backgroundColor:"#334950",margin:"70px",height:"40px",width:"150px",border:"none",borderRadius:"5px"}}>Sign-UP</button>
-        <div>{response}</div>
-
      </div>
-
+     <span style={{ padding: '20px', fontFamily: 'Arial',width:"30px" }}>
+      {response && (
+        <div style={{ marginTop: '40px' }}>
+          <h2>Response Data:</h2>
+          <pre style={{ background: '#000000', padding: '10px', borderRadius: '5px' , fontColor : "black"}}>
+            {JSON.stringify(response, null, 2)} 
+          </pre>
+        </div>
+      )}
+    </span>
     </>
   }
