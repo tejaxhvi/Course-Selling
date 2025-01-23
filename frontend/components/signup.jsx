@@ -25,7 +25,7 @@ export function Signup() {
   }
 
     return <>
-    <h1 style={{textAlign:"center",fontSize:"50px"}}>Sign-Up </h1>
+    <h1 style={{textAlign:"center",fontSize:"70px"}}>Sign-Up </h1>
     <div style={{display:"grid",justifyContent: 'center', alignItems: 'center',height:"20vh"}}>
         <div  style={{fontSize:"25px"}}>Username :</div>
         <div id="email" style={{height:"35px",width:"250px",backgroundColor:"#334155",borderColor:"white",borderRadius:"5px"}} >
