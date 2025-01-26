@@ -7,7 +7,6 @@ import { Useref } from '../components/useRef'
 import './App.css'
 
 function App() {
-  const navigate = useNavigate();
 
   return (
     <>
@@ -24,6 +23,8 @@ function App() {
 }
 
 function Layout() {
+  const navigate  = useNavigate();
+
   return <div style={{Height:"100vh" }}>
     <div style={{display: "flex",gap:"40vw",width:'full',height:"10vh",justifyContent: "space-between"}}>
         <h1 style={{ color : 'red' , margin : "30px" , fontSize : "40px",cursor : "pointer"}} onClick={()=> navigate('/')}>Course Selling </h1>
@@ -42,7 +43,9 @@ function Footer() {
   </div>
 }
 function ErrorPage() {
-  
+  return<>
+  <h1>404 Error Page</h1>
+  </>
 }
 
 

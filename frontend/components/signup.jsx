@@ -1,11 +1,11 @@
 import { useNavigate } from 'react-router-dom';
-import { useEffect , useState } from 'react';
+import { useEffect , useState , useRef } from 'react';
 import axios from 'axios'
 
 export function Signup() {
-     const [username, setusername ] = useState('');
-      const [password , setpassword ] = useState('')
-      const [email , setemail ] = useState('')
+    const username = useRef(null)
+    const password = useRef(null)
+    const email = useRef(null)
     const [response , setresponse] = useState(null)
 
   const navigate = useNavigate();
@@ -13,7 +13,7 @@ export function Signup() {
   function completed() {
       console.log(username , password, email) ;
       // Your JSON data
-      const jsonData = { username : username , password : password , email : email };
+      const jsonData = { username : username.current.value , password : password.current.value , email : email.current.value };
 
       axios.post('http://localhost:3000/api/user/signup',jsonData)
       .then((response)=> {
@@ -29,15 +29,15 @@ export function Signup() {
     <div style={{display:"grid",justifyContent: 'center', alignItems: 'center',height:"20vh"}}>
         <div  style={{fontSize:"25px"}}>Username :</div>
         <div id="email" style={{height:"35px",width:"250px",backgroundColor:"#334155",borderColor:"white",borderRadius:"5px"}} >
-          <input onChange={(e)=> setusername(e.target.value)} style={{outline:"none",border:"none",margin:"7px",backgroundColor:"#334155",fontSize:"15px"}}type="text" /></div> <br/>
+          <input ref={username} style={{outline:"none",border:"none",margin:"7px",backgroundColor:"#334155",fontSize:"15px"}}type="text" /></div> <br/>
 
           <div  style={{fontSize:"25px"}}>Email :</div>
         <div id="email" style={{height:"35px",width:"250px",backgroundColor:"#334155",borderColor:"white",borderRadius:"5px"}} >
-          <input onChange={(e)=> setemail(e.target.value)} style={{outline:"none",border:"none",margin:"7px",backgroundColor:"#334155",fontSize:"15px"}}type="text" /></div>  
+          <input ref={email} style={{outline:"none",border:"none",margin:"7px",backgroundColor:"#334155",fontSize:"15px"}}type="text" /></div>  
 
           <div  style={{fontSize:"25px"}}>Password :</div>
         <div id="pass" style={{height:"35px",width:"250px",backgroundColor:"#334155",borderColor:"white",borderRadius:"5px"}} >
-          <input onChange={(e)=> setpassword(e.target.value)} style={{outline:"none",border:"none",margin:"7px",backgroundColor:"#334155",fontSize:"15px"}}type="text" /></div>  
+          <input ref={password} style={{outline:"none",border:"none",margin:"7px",backgroundColor:"#334155",fontSize:"15px"}}type="text" /></div>  
           
        <button style={{margin:"50px",height:"30px"}}onClick={() => navigate("/login")}>Already a User</button>
 
